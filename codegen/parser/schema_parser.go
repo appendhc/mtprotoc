@@ -18,14 +18,14 @@
 package parser
 
 import (
-	"strings"
-	"hash/crc32"
-	"regexp"
-	"os"
 	"bufio"
-	"io"
-	"github.com/golang/glog"
 	"fmt"
+	"github.com/magicsong/color-glog"
+	"hash/crc32"
+	"io"
+	"os"
+	"regexp"
+	"strings"
 )
 
 func calculateCRC32(name, params, restype string) uint32 {
@@ -324,7 +324,7 @@ func Parse(filePath string) (*MTProtoSchemas, error) {
 					if IsBuiltInTypeByName(ptype2) {
 						ptype = MakeBuiltInType(ptype2)
 					} else {
-						ptype =  MakeCustomType(ptype2)
+						ptype = MakeCustomType(ptype2)
 					}
 				}
 			}
@@ -341,20 +341,20 @@ func Parse(filePath string) (*MTProtoSchemas, error) {
 
 		if funcsNow {
 			f := Function{
-				Method: name,
-				Id: int32(crc32),
+				Method:    name,
+				Id:        int32(crc32),
 				ParamList: params,
-				ResType: ResType,
-				Line: line,
+				ResType:   ResType,
+				Line:      line,
 			}
 			schemas.FunctionList = append(schemas.FunctionList, f)
 		} else {
 			c := Constructor{
 				Predicate: name,
-				Id: int32(crc32),
+				Id:        int32(crc32),
 				ParamList: params,
-				BaseType: ResType,
-				Line: line,
+				BaseType:  ResType,
+				Line:      line,
 			}
 			schemas.ConstructorList = append(schemas.ConstructorList, c)
 		}

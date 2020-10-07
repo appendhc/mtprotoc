@@ -1,27 +1,10 @@
-/*
- *  Copyright (c) 2017, https://github.com/nebulaim
- *  All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package genproto
 
 import (
-	"strings"
-	mtproto_parser "github.com/nebulaim/mtprotoc/codegen/parser"
-	"strconv"
 	"fmt"
+	mtproto_parser "mtprotoc/codegen/parser"
+	"strconv"
+	"strings"
 )
 
 // types
@@ -44,23 +27,23 @@ type TplFunctionDataList struct {
 
 // 参数列表
 type TplParam struct {
-	Type string
-	Name string
+	Type  string
+	Name  string
 	Index string
 }
 
 // 对应生成proto消息
-type TplMessageData struct{
+type TplMessageData struct {
 	Name string
 	// 碰撞的字段名，特殊处理
 	ParamList []TplParam
-	ResType string
-	Line string
+	ResType   string
+	Line      string
 }
 
 // Base类型
 type TplBaseTypeData struct {
-	Name string
+	Name      string
 	ParamList []TplParam
 	// Line string
 	ResType string
@@ -73,7 +56,7 @@ func toMessageName(n string) string {
 }
 
 var (
-	ignoreRpcList = []string{"invokeAfterMsg", "invokeAfterMsgs", "initConnection", "invokeWithLayer", "invokeWithoutUpdates"}
+	ignoreRpcList = []string{"invokeAfterMsg", "invokeAfterMsgs", "initConnection", "invokeWithLayer", "invokeWithoutUpdates", "invokeWithMessagesRange", "invokeWithTakeout"}
 
 	// boolFalse#bc799737 = Bool;
 	// boolTrue#997275b5 = Bool;
@@ -85,7 +68,7 @@ var (
 	// error#c4b9f9bb code:int text:string = Error;
 	//
 	// null#56730bcc = Null;
-	coreTypeList = []string {"boolFalse", "boolTrue", "true", "vector", "error", "null"}
+	coreTypeList = []string{"boolFalse", "boolTrue", "true", "vector", "error", "null"}
 )
 
 func isCoreTypeList(t string) bool {
@@ -196,8 +179,8 @@ func makeBaseTypeListTpl(schemas *mtproto_parser.Schemas, isCoreTypes bool) (typ
 		}
 
 		messageData := TplMessageData{
-			Name: toMessageName(c.Predicate),
-			Line: c.Line,
+			Name:    toMessageName(c.Predicate),
+			Line:    c.Line,
 			ResType: baseTypeName,
 			// toMessageName(c.BaseType.Name()),
 		}
@@ -230,7 +213,7 @@ func makeBaseTypeListTpl(schemas *mtproto_parser.Schemas, isCoreTypes bool) (typ
 		names := make(map[string][]int)
 
 		for i, p := range v.ParamList {
-			v.ParamList[i].Index = strconv.Itoa(i+1)
+			v.ParamList[i].Index = strconv.Itoa(i + 1)
 			if _, ok := names[p.Name]; !ok {
 				names[p.Name] = []int{i}
 			} else {
@@ -287,7 +270,7 @@ func makeFunctionDataListTpl(schemas *mtproto_parser.Schemas) (funcs *TplFunctio
 		for i, p := range c.ParamList {
 			param := TplParam{}
 			param.Name = p.Name
-			param.Index = strconv.Itoa(i+1)
+			param.Index = strconv.Itoa(i + 1)
 			param.Type = toProtoType(p.Type)
 			if param.Type == "" {
 				continue

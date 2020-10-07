@@ -18,18 +18,18 @@
 package genproto
 
 import (
-	mtproto_parser "github.com/nebulaim/mtprotoc/codegen/parser"
 	"bytes"
-	"io/ioutil"
 	"fmt"
-	"github.com/golang/glog"
-	"text/template"
+	"github.com/magicsong/color-glog"
+	"io/ioutil"
+	mtproto_parser "mtprotoc/codegen/parser"
 	"strings"
+	"text/template"
 )
 
 type TplCRC32Info struct {
 	Name string
-	Id int32
+	Id   int32
 }
 
 type TplCRC32 struct {
@@ -40,13 +40,13 @@ func makeTplCRC32List(schemas *mtproto_parser.Schemas) (tplCRC32List []TplCRC32I
 	for _, c := range schemas.ConstructorList {
 		tplCRC32List = append(tplCRC32List, TplCRC32Info{
 			Name: strings.Replace(c.Predicate, ".", "_", -1),
-			Id: c.Id,
+			Id:   c.Id,
 		})
 	}
 	for _, f := range schemas.FunctionList {
 		tplCRC32List = append(tplCRC32List, TplCRC32Info{
 			Name: strings.Replace(f.Method, ".", "_", -1),
-			Id: f.Id,
+			Id:   f.Id,
 		})
 	}
 	return
@@ -69,4 +69,3 @@ func genCRC32Proto(schemas *mtproto_parser.MTProtoSchemas, outFilePath string) {
 		glog.Fatal("genProtoCRC32 error: ", err)
 	}
 }
-

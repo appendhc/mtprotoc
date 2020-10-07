@@ -18,10 +18,10 @@
 package main
 
 import (
-	"fmt"
 	"encoding/hex"
+	"fmt"
 
-	. "github.com/nebulaim/mtprotoc/codegen/out"
+	. "mtprotoc/codegen/out"
 )
 
 func main() {

@@ -18,7 +18,7 @@
 package genproto
 
 import (
-	mtproto_parser "github.com/nebulaim/mtprotoc/codegen/parser"
+	mtproto_parser "mtprotoc/codegen/parser"
 )
 
 func GenProto(schemas *mtproto_parser.MTProtoSchemas, outFilePath string) {
@@ -28,4 +28,3 @@ func GenProto(schemas *mtproto_parser.MTProtoSchemas, outFilePath string) {
 	genTransportProto(schemas, outFilePath)
 	genSyncProto(schemas, outFilePath)
 }
-

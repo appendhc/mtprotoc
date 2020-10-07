@@ -18,11 +18,11 @@
 package genproto
 
 import (
-	mtproto_parser "github.com/nebulaim/mtprotoc/codegen/parser"
 	"bytes"
-	"io/ioutil"
 	"fmt"
-	"github.com/golang/glog"
+	"github.com/magicsong/color-glog"
+	"io/ioutil"
+	mtproto_parser "mtprotoc/codegen/parser"
 	"text/template"
 )
 
