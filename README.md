@@ -2,7 +2,5 @@
 
 ###Installation Guide
 
-> Blockquotes
-
 ### API, Protocol documentation
 https://core.telegram.org/mtproto
